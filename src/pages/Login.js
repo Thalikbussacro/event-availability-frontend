@@ -1,10 +1,11 @@
-// Arquivo Login.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api/api';
 
 function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,6 +17,7 @@ function Login() {
       const { data } = await loginUser(form);
       localStorage.setItem('token', data.token);
       setMessage('Login successful!');
+      setTimeout(() => navigate('/events'), 2000); // Redireciona após 2 segundos
     } catch (error) {
       setMessage('Login failed.');
     }

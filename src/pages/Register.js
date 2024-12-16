@@ -1,10 +1,11 @@
-// Arquivo Register.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../api/api';
 
 function Register() {
   const [form, setForm] = useState({ username: '', email: '', password: '' });
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,6 +16,7 @@ function Register() {
     try {
       await registerUser(form);
       setMessage('User registered successfully!');
+      setTimeout(() => navigate('/login'), 2000); // Redireciona após 2 segundos
     } catch (error) {
       setMessage('Registration failed.');
     }
